@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>  
+<body>
+    <div class="container">
+        <h1>Vote for Your Favorite Animal!</h1>
+        <form method="POST" action="/vote" class="vote-form">
+            <div class="options">
+                <input type="radio" name="option" value="cat" id="cat">
+                <label for="cat" class="btn-option">Cat</label>
+                <input type="radio" name="option" value="dog" id="dog">
+                <label for="dog" class="btn-option">Dog</label>
+            </div>
+            <input type="submit" value="Vote" class="btn-submit">
+        </form>
+    </div>
+</body>
+</html>
