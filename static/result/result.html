@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting Results</title>
+    <link rel="stylesheet" href="/static/result/style.css"> 
+</head>
+<body>
+    <header>
+        <h1>Voting Results</h1>
+    </header>
+    <main>
+        <section class="result">
+            <h2>Cats</h2>
+            <p class="vote-count">{{.Cats}}</p>
+        </section>
+        <section class="result">
+            <h2>Dogs</h2>
+            <p class="vote-count">{{.Dogs}}</p>
+        </section>
+    </main>
+</body>
+</html>

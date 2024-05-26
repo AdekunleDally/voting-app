@@ -12,7 +12,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-var voteTmpl = template.Must(template.ParseFiles("static/index.html"))
+var voteTmpl = template.Must(template.ParseFiles("static/vote/index.html"))
 var redisClient *redis.Client
 var dbConn *pgx.Conn
 var ctx = context.Background()
@@ -72,8 +72,11 @@ func main() {
 	go ProcessVotes()
 
 	// Set up HTTP handlers
-	http.HandleFunc("/", VoteHandler)
+	http.HandleFunc("/vote", VoteHandler)
 	http.HandleFunc("/result", ResultHandler)
+
+	// Serve static files
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
 	// Start the HTTP server for handling votes
 	log.Printf("Starting vote server on %s:%s", SERVER_HOST, SERVER_PORT_ONE)
