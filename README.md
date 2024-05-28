@@ -33,5 +33,5 @@ To generate the  code, run the following command:
  
 
 go run main.go worker.go result.go
-The voting app interace runs on localhost:8080 while the results interface runs on localhost:8081/result
+The voting app inteface runs on localhost:8080 while the results interface runs on localhost:8081/result
 
