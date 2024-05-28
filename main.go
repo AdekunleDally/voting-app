@@ -1,43 +1,44 @@
 package main
 
 import (
-	"context"
+	  
 	"html/template"
 	"log"
 	"net/http"
 	"os"
 
 	"github.com/go-redis/redis/v8"
-	"github.com/jackc/pgx/v4"
 	"github.com/joho/godotenv"
 )
 
-var voteTmpl = template.Must(template.ParseFiles("static/vote/index.html"))
+var voteTmpl = template.Must(template.ParseFiles("frontend/static/index.html"))
 var redisClient *redis.Client
-var dbConn *pgx.Conn
-var ctx = context.Background()
+
+// var dbConn *pgx.Conn
+// var ctx = context.Background()
 
 func init() {
+
 	redisClient = redis.NewClient(&redis.Options{
 		Addr: "localhost:6379",
 	})
+	initDB()
+	// err := godotenv.Load()
+	// if err != nil {
+	// 	log.Println("No .env file found")
+	// }
 
-	err := godotenv.Load()
-	if err != nil {
-		log.Println("No .env file found")
-	}
+	// POSTGRES_HOST := os.Getenv("POSTGRES_HOST")
+	// POSTGRES_PORT := os.Getenv("POSTGRES_PORT")
+	// POSTGRES_USER := os.Getenv("POSTGRES_USER")
+	// POSTGRES_PASSWORD := os.Getenv("POSTGRES_PASSWORD")
 
-	DB_HOST := os.Getenv("DB_HOST")
-	DB_PORT := os.Getenv("DB_PORT")
-	DB_USER := os.Getenv("DB_USER")
-	DB_PASS := os.Getenv("DB_PASS")
+	// connStr := "postgres://" + POSTGRES_USER + ":" + POSTGRES_PASSWORD + "@" + POSTGRES_HOST + ":" + POSTGRES_PORT + "/votingdb"
 
-	connStr := "postgres://" + DB_USER + ":" + DB_PASS + "@" + DB_HOST + ":" + DB_PORT + "/votingdb"
-
-	dbConn, err = pgx.Connect(ctx, connStr)
-	if err != nil {
-		log.Fatal("Unable to connect to database:", err)
-	}
+	// dbConn, err = pgx.Connect(ctx, connStr)
+	// if err != nil {
+	// 	log.Fatal("Unable to connect to database:", err)
+	// }
 }
 
 func VoteHandler(w http.ResponseWriter, r *http.Request) {
@@ -57,7 +58,7 @@ func VoteHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
-
+  
 func main() {
 	err := godotenv.Load()
 	if err != nil {
@@ -76,7 +77,8 @@ func main() {
 	http.HandleFunc("/result", ResultHandler)
 
 	// Serve static files
-	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	http.Handle("/frontend/static/", http.StripPrefix("/frontend/static", http.FileServer(http.Dir("frontend/static"))))
+	http.Handle("/results/static/", http.StripPrefix("/results/static", http.FileServer(http.Dir("results/static"))))
 
 	// Start the HTTP server for handling votes
 	log.Printf("Starting vote server on %s:%s", SERVER_HOST, SERVER_PORT_ONE)

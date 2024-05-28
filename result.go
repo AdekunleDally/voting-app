@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-var resultTmpl = template.Must(template.ParseFiles("static/result/result.html"))
+var resultTmpl = template.Must(template.ParseFiles("results/static/result.html"))
 
 func ResultHandler(w http.ResponseWriter, r *http.Request) {
 	var catCount, dogCount int

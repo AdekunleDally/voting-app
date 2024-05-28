@@ -1,0 +1,252 @@
+version: '3.8'
+
+services:
+  voting-app:
+    build: .
+    container_name: vote_app
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - SERVER_HOST=0.0.0.0
+      - SERVER_PORT_ONE=8080
+      - SERVER_PORT_TWO=8081
+    depends_on:
+      - redis
+      - postgres
+
+  redis:
+    image: "redis:alpine"
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  postgres:
+    image: "postgres:alpine"
+    container_name: postgres
+    environment:
+      POSTGRES_DB: votingdb
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# version: '3.9'
+
+# services:
+#   frontend:
+#     build:
+#       context: .
+#       dockerfile: ./frontend/Dockerfile
+#     ports:
+#       - "8080:8080"
+#     depends_on:
+#       - redis
+#       - dbconn
+#     environment:
+#       - REDIS_HOST=redis
+#       - REDIS_PORT=6379
+#       - POSTGRES_HOST=postgres
+#       - POSTGRES_PORT=5432
+#       - POSTGRES_USER=${POSTGRES_USER}
+#       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+#   redis:
+#     image: redis:6.2
+#     container_name: redis
+#     ports:
+#       - "6379:6379"
+
+#   dbconn:
+#     build:
+#       context: .
+#       dockerfile: ./dbconn/Dockerfile
+#     depends_on:
+#       - postgres
+   
+#   worker:
+#     build:
+#       context: .
+#       dockerfile: ./worker/Dockerfile
+#     depends_on:
+#       - redis
+#       - postgres
+#       - dbconn
+      
+#   postgres:
+#     image: postgres:13
+#     container_name: postgres
+#     environment:
+#       POSTGRES_USER: ${POSTGRES_USER}
+#       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+#       POSTGRES_DB: votingdb
+#     ports:
+#       - "5432:5432"
+#     volumes:
+#       - postgres-data:/var/lib/postgresql/data
+      
+#   results:
+#     build:
+#       context: .
+#       dockerfile: ./results/Dockerfile
+#     ports:
+#       - "8081:8081"
+#     depends_on:
+#       - redis
+#       - postgres
+#       - dbconn
+
+# volumes:
+#   postgres-data:
